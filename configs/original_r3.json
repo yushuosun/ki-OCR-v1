@@ -1,0 +1,19 @@
+{
+  "candidate": "R3_VLLM_COLD_SAME_BACKEND_R1",
+  "base_candidate": "R3_VLLM_COLD_SAME_BACKEND_R1",
+  "table_reread_scale": 1.0,
+  "table_source_view": "GUARD_VIEW",
+  "formula_reread_scale": 1.25,
+  "guard_scales": [
+    1.0,
+    0.75,
+    1.5
+  ],
+  "selection_policy": "historical_latest_abnormal",
+  "expected_seed": 0,
+  "public_pages": 1651,
+  "public_candidate_count": 1,
+  "public_full_evaluation_count": null,
+  "GT_used_in_inference": false,
+  "auto_restart": false
+}

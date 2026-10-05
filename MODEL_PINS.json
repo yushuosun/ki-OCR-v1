@@ -1,0 +1,63 @@
+{
+  "evidence": "Frozen staged model file inventory; metadata only",
+  "evidence_sha256": "df4384957048f4603a3bf35e7ffc6074f9b984c4faf7e3f524aa7921ba1e4bfd",
+  "public_main_weight_sha_matches_staged": true,
+  "public_processor_bytes_verified": false,
+  "tele": {
+    "added_tokens.json": {
+      "sha256": "58b54bbe36fc752f79a24a271ef66a0a0830054b4dfad94bde757d851968060b",
+      "bytes": 605
+    },
+    "chat_template.jinja": {
+      "sha256": "a0bc6f6fc7a29a80017a433e8f03a1cc1236e838a944a2d034295a60c4f2fddb",
+      "bytes": 1017
+    },
+    "config.json": {
+      "sha256": "92c5e15f1768dcb54bceae170043fbfefd248508159700b2179824b88c33ae75",
+      "bytes": 3516
+    },
+    "generation_config.json": {
+      "sha256": "50867494bddf9ddc8e289e6214be5a2263e68f16c127a3652c6eb9f17990e5d9",
+      "bytes": 244
+    },
+    "merges.txt": {
+      "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+      "bytes": 1671853
+    },
+    "model.safetensors": {
+      "sha256": "9817b18041bd96403f75e38a33b28ed0cd5fb2641f67eead673afabd3c408109",
+      "bytes": 2830223488
+    },
+    "modeling_naviocr.py": {
+      "sha256": "7adac1cc17009f9f1b8e0c58284d7c0b9989a590f017b9e5964cc42270207922",
+      "bytes": 84057
+    },
+    "preprocessor_config.json": {
+      "sha256": "f2058c716eef96ccaed1cc1e2d0c08306b62586d535b28d9d08e691b2fab7ca0",
+      "bytes": 350
+    },
+    "special_tokens_map.json": {
+      "sha256": "76862e765266b85aa9459767e33cbaf13970f327a0e88d1c65846c2ddd3a1ecd",
+      "bytes": 613
+    },
+    "tokenizer.json": {
+      "sha256": "9c5ae00e602b8860cbd784ba82a8aa14e8feecec692e7076590d014d7b7fdafa",
+      "bytes": 11421896
+    },
+    "tokenizer_config.json": {
+      "sha256": "e04be4dd17e9f661bc487ba848a37f66a8f1adf2eef412f5d4ecb40cab4d39e7",
+      "bytes": 4730
+    },
+    "video_preprocessor_config.json": {
+      "sha256": "15bb7c2f2bc95fe9cc3749a4b287872b4886a15e9fcf550a4122a46ae26150bd",
+      "bytes": 913
+    },
+    "vocab.json": {
+      "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+      "bytes": 2776833
+    }
+  },
+  "public_four_metadata_bytes_verified": true,
+  "public_all_13_files_verified": false,
+  "public_metadata_check": "PUBLIC_MODEL_METADATA_CHECK.json"
+}

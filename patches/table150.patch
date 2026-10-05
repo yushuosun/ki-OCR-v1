@@ -1,0 +1,158 @@
+--- source17/entry.py
++++ table150/entry.py
+@@ -20,7 +20,11 @@
+ STAGES = {'NATIVE':'run_tele_img.py','FORMULA125':'stack_reread_v1.py','GUARD':'stack_guard_v1.py','TABLE1X':'stack_reread_v1.py'}
+ INPUT_SHA = '363cdb89f7ba01e742474454011e36e57d9601566baf4660ce94ef52d7b711c8'
+ FORMAL_FILES={'entry.py','current_r3.py','paddle_contract.py','tele_support.py','cascade.py','native.py',
+-    'NATIVE_DETERMINISTIC_CODE.json','device_compat.py','source_audit.py','formal_gates.py','fresh_cost.py','formal_terminal.py','merge_formal.py'}
++    'NATIVE_DETERMINISTIC_CODE.json','device_compat.py','source_audit.py','formal_gates.py','fresh_cost.py','formal_terminal.py','merge_formal.py','CANDIDATE_CONFIG.json'}
++
++
++CANDIDATE = 'R3_ODB_TABLE150_SINGLE_CANDIDATE_R1'
++SCIENTIFIC_PROTOCOL = {'candidate': 'R3_ODB_TABLE150_SINGLE_CANDIDATE_R1', 'base_candidate': 'R3_VLLM_COLD_SAME_BACKEND_R1', 'table_reread_scale': 1.5, 'table_source_view': 'GUARD_VIEW', 'formula_reread_scale': 1.25, 'guard_scales': [1.0, 0.75, 1.5], 'selection_policy': 'historical_latest_abnormal', 'expected_seed': 0, 'public_pages': 1651, 'public_candidate_count': 1, 'public_full_evaluation_count': 1, 'GT_used_in_inference': False, 'auto_restart': False}
+ 
+ 
+ def load(p): return json.loads(Path(p).read_text(encoding='utf-8-sig'))
+@@ -54,7 +58,10 @@
+ 
+ def contract_rows(c, cp):
+     from current_r3 import POLICY_CANDIDATES,HISTORICAL
+-    require(c['candidate']==POLICY_CANDIDATES.get(c.get('selection_policy',HISTORICAL)),'CANDIDATE_SELECTION_POLICY_MISMATCH')
++    require(c['candidate']==CANDIDATE and c.get('scientific_protocol')==SCIENTIFIC_PROTOCOL,'SINGLE_TABLE150_CANDIDATE_REQUIRED')
++    require(c.get('selection_policy')==HISTORICAL and c.get('expected_seed')==0,'ORIGINAL_POLICY_SEED_REQUIRED')
++    frozen=load(HERE/'CANDIDATE_CONFIG.json')['frozen_runtime']
++    for key,value in frozen.items(): require(c.get(key)==value,'CANDIDATE_FROZEN_RUNTIME_CHANGED:'+key)
+     require(c['backend']=='vllm-engine' and c['max_model_len']==16384,'FROZEN_BACKEND_CONTEXT')
+     require(c['old_cache_inputs']==[],'OLD_CACHE_INPUTS_FORBIDDEN')
+     require(c['source_manifest_sha256']==INPUT_SHA,'ORIGINAL_MANIFEST_IDENTITY')
+@@ -151,7 +158,19 @@
+         ('NATIVE',['--out',str(d/'NATIVE'),'--chunk','16']),
+         ('FORMULA125',['--run',str(d/'NATIVE'),'--out',str(d/'FORMULA125'),'--kinds','equation','--scale','1.25','--chunk','32']),
+         ('GUARD',['--run',str(d/'FORMULA125'),'--fallback',str(d/'NATIVE'),'--out',str(d/'GUARD'),'--scales','1.0,0.75,1.5']),
+-        ('TABLE1X',['--run',str(d/'GUARD_VIEW'),'--out',str(d/'TABLE1X'),'--kinds','table','--scale','1.0','--chunk','32'])]
++        ('TABLE1X',['--run',str(d/'GUARD_VIEW'),'--out',str(d/'TABLE1X'),'--kinds','table','--scale','1.5','--chunk','32'])]
++
++
++class FatalEngine(BaseException):
++    """Bypass stock except Exception -> None handlers; engineering only."""
++
++
++def fatal_generate(fn):
++    def wrapped(*args,**kwargs):
++        try: return fn(*args,**kwargs)
++        except Exception as exc:
++            raise FatalEngine(type(exc).__name__+': '+str(exc)) from exc
++    return wrapped
+ 
+ 
+ def stage_input_rows(rows):
+@@ -198,6 +217,8 @@
+     client=TeleOCRMODEL_SERVICE.get_model('vllm-engine',bindings['model_root'],None)
+     require(client.client.model_max_length==16384 and client.client.batch_size==0,'ACTUAL_CONTEXT_OR_BATCHING_CHANGED')
+     require(client.batching_mode=='stepping','ORIGINAL_STEPPING_REQUIRED')
++    actual_seed=client.client.vllm_llm.llm_engine.vllm_config.model_config.seed
++    require(actual_seed==c['expected_seed']==0,'ACTUAL_ENGINE_SEED_CHANGED')
+     require(support.plain(client.helper.sampling_params)==c['expected_sampling'],'FROZEN_PRESENCE_FREQUENCY_AND_SAMPLING_CHANGED')
+     require(support.plain(client.helper.prompts)==c['expected_prompts'],'FROZEN_PROMPTS_CHANGED')
+     def verify_loaded_sources():
+@@ -221,9 +242,10 @@
+     w.config=config; w.budget=Budget(); w.started=time.monotonic(); w.local=threading.local(); w.preparation_events=[]; w.preparation_lock=threading.Lock()
+     w.state={'stage':'LOADING','batch':None,'calls':0,'completed_requests':0,'completed_pages':[]}
+     w.bindings=[]; w.page_ids=[]; w.crop_candidates={}
+-    def timeout(sig,frame): raise TimeoutError('REQUEST_600S_OR_OWNER_LEASE_EXPIRED')
++    def timeout(sig,frame): raise FatalEngine('REQUEST_600S_OR_OWNER_LEASE_EXPIRED')
+     signal.signal(signal.SIGALRM,timeout)
+     w.install_observers(client,vllm.LLM)
++    vllm.LLM.generate=fatal_generate(vllm.LLM.generate)
+     stage_raw=[]
+     original_append=support.append
+     def observed_append(path,value):
+@@ -272,10 +294,10 @@
+             materialize(d,batch_rows,'B0',['TABLE1X','GUARD_VIEW'])
+             for row in batch_rows:
+                 append(run/'PAGES.jsonl',{'page_id':row['page_id'],'image_sha256':row['image_sha256'],'size':row['size'],'batch':batch,'status':'COMPLETE'})
+-        except Exception as exc:
+-            append(run/'ERRORS.jsonl',{'batch':batch,'stage':w.state['stage'],'error':type(exc).__name__,'message':str(exc),'pages':[r['page_id'] for r in batch_rows]})
+-            # No retry. Continue independent next batch; missing pages remain denominator.
+-            if isinstance(exc,(MemoryError,TimeoutError)) or 'out of memory' in str(exc).lower(): raise
++        except BaseException as exc:
++            append(run/'ERRORS.jsonl',{'batch':batch,'stage':w.state['stage'],'error':type(exc).__name__,'message':str(exc),'pages':[r['page_id'] for r in batch_rows],'fatal':True})
++            # Fatal attempt ends here; all unreturned rows remain the denominator.
++            raise
+     signal.setitimer(signal.ITIMER_REAL,0)
+     verify_loaded_sources()
+     import torch
+@@ -363,7 +385,8 @@
+                     return {'returncode':child.returncode,'error':'OWNER_LEASE_EXPIRED','wall_seconds':time.monotonic()-phase_start}
+             return {'returncode':code,'wall_seconds':time.monotonic()-phase_start}
+     try: phases['tele']=driver('tele')
+-    except Exception as exc: phases['tele']={'error':type(exc).__name__,'message':str(exc)}
++    except BaseException as exc: phases['tele']={'error':type(exc).__name__,'message':str(exc)}
++    tele_failed='error' in phases['tele'] or phases['tele'].get('returncode',0)!=0
+     records=jsonl(run/'PRIVATE_RAW_REQUESTS.jsonl'); adoptions=jsonl(run/'ADOPTIONS.jsonl'); pages={}; eligible=[]; errors={}
+     stage_pins={s:c['stage_pins'][n] for s,n in STAGES.items()}
+     for r in row_list:
+@@ -374,11 +397,13 @@
+             if trigger: eligible.append({'page_id':r['page_id'],'image_path':str(Path(c['bindings']['image_root'])/r['id']),'input_sha256':r['image_sha256']})
+         except Exception as exc: errors[r['page_id']]=str(exc)
+     put(run/'PADDLE_INPUTS.json',{'pages':eligible,'reference_access':False,'run_contract_sha256':contract_sha})
+-    if eligible:
++    if tele_failed:
++        phases['paddle']={'status':'SKIPPED_TELE_FAILURE','no_model_call':True}
++    elif eligible:
+         try:
+             require(all(c['paddle_binding'].get(k) for k in ['source','python','root']),'PADDLE_BINDING_MISSING')
+             phases['paddle']=driver('paddle')
+-        except Exception as exc: phases['paddle']={'error':type(exc).__name__,'message':str(exc)}
++        except BaseException as exc: phases['paddle']={'error':type(exc).__name__,'message':str(exc)}
+     else: phases['paddle']={'status':'NOT_TRIGGERED','actual_path_coverage':False}
+     terminals=[]
+     for r in row_list:
+@@ -402,7 +427,9 @@
+     result={'status':'CPU_SYNTHETIC_ONLY' if synthetic else 'FINISHED_WITH_ERRORS' if any(t['state']!='COMPLETE' for t in terminals) or phase_failed else 'FINISHED',
+         'candidate':c['candidate'],'selection_policy':c.get('selection_policy','historical_latest_abnormal'),'pages':len(terminals),'returned_pages':sum(t['state']=='COMPLETE' for t in terminals),
+         'paddle_trigger_pages':len(eligible),'phases':phases,'GPU_smoke':'NOT_RUN' if synthetic else 'REQUIRES_RESULT_REVIEW',
+-        'old_cache_inputs':[],'score':None,'contract_sha256':contract_sha,'synthetic':synthetic}
++        'old_cache_inputs':[],'score':None,'contract_sha256':contract_sha,'synthetic':synthetic,
++        'scientific_protocol':SCIENTIFIC_PROTOCOL,'engineering_changes':['generation_exception_fatal','batch_fail_fast','skip_paddle_after_tele_failure'],
++        'automatic_restart':False,'new_process_recovery':'EXPLICIT_SEPARATE_ATTEMPT_AND_COST_ONLY'}
+     if c.get('experiment_kind')=='FRESH_FORMAL_RUN':
+         from formal_terminal import summarize
+         terminal=summarize(rows,terminals,jsonl(run/'STAGES.jsonl'),jsonl(run/'PAGES.jsonl'),jsonl(run/'SOURCE_AUDITS.jsonl'),phase_failed,synthetic)
+--- source17/tele_support.py
++++ table150/tele_support.py
+@@ -473,7 +473,7 @@
+                     x0, y0, x1, y1 = obj["bbox"]
+                     actual = [int(x0 * sx), int(y0 * sy), int(x1 * sx), int(y1 * sy)]
+                     base = crop_of(image, (x0 * sx, y0 * sy, x1 * sx, y1 * sy))
+-                    scales = [1.25] if stage == "FORMULA125" else [1.0] if stage == "TABLE1X" else [1.0, 0.75, 1.5]
++                    scales = [1.25] if stage == "FORMULA125" else [1.5] if stage == "TABLE1X" else [1.0, 0.75, 1.5]
+                     for scale in scales:
+                         factor = scale * (200 / 72 if stage == "GUARD" and kind == "equation" else 1.0)
+                         crop = base if abs(factor - 1) < 1e-6 else base.resize(
+--- source17/merge_formal.py
++++ table150/merge_formal.py
+@@ -4,6 +4,7 @@
+ import json
+ from pathlib import Path
+ from formal_gates import MANIFEST,INPUTS,require
++from entry import CANDIDATE,SCIENTIFIC_PROTOCOL
+ INPUT_ROOT=Path(__file__).resolve().parent
+ INPUT_FILES={'gpu2':'GPU2_INPUTS.json','gpu4':'GPU4_INPUTS.json'}
+ 
+@@ -21,6 +22,7 @@
+             [r['original_roster_index'] for r in rows]==list(range(start,start+count)) and
+             len({r['id'] for r in rows})==count,'ACTUAL_FIXED_INPUT_ROSTER_REQUIRED')
+     require(result.get('synthetic') is False and result.get('experiment_kind')=='FRESH_FORMAL_RUN','REAL_FRESH_FORMAL_RESULT_REQUIRED')
++    require(result.get('candidate')==CANDIDATE and result.get('scientific_protocol')==SCIENTIFIC_PROTOCOL,'MIXED_OR_ALTERNATE_CANDIDATE_FORBIDDEN')
+     require(result.get('scope')==scope and result.get('pages')==count and result.get('source_manifest_sha256')==MANIFEST and
+             result.get('inputs_sha256')==INPUTS[scope] and result.get('reused_source_requests')==0,'FROZEN_HALF_IDENTITY_REQUIRED')
+     require(sha(terminal_path)==result.get('terminal_roster_sha256'),'ACTUAL_TERMINAL_SHA_CHANGED')
+@@ -42,6 +44,7 @@
+     return {'experiment_kind':'FRESH_FORMAL_RUN_1651_AGGREGATE','status':'FULL1651_PROTOCOL_COMPLETE' if passed else 'FULL1651_TERMINALS_WITH_FAILURES_RETAINED',
+             'original_denominator_pages':1651,'terminal_pages':len(terminals),'complete_pages':complete,'failed_pages_retained':1651-complete,
+             'overlap':0,'protocol_completed':passed,'cold_start_smoke_pass':False,'score':None,'source_manifest_sha256':MANIFEST,
++            'candidate':CANDIDATE,'scientific_protocol':SCIENTIFIC_PROTOCOL,'automatic_restart':False,
+             'half_result_sha256':[sha_a,sha_b],'GT_modified':False,'failed_page_ids':[t['id'] for t in terminals if t.get('state')!='COMPLETE']}
+ 
+ 

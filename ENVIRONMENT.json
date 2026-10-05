@@ -1,0 +1,23 @@
+{
+  "evidence": "Actual front826 LOADED.json",
+  "evidence_sha256": "ae0851feffdc90216c4abc21ff2a6ecc0a82d1a2aecb2bb5e25aba978f34dec3",
+  "verified_versions": {
+    "vllm": "0.11.0",
+    "torch": "2.8.0+cu128",
+    "transformers": "4.57.6"
+  },
+  "full_dependency_lock": null,
+  "Python": "original scorer 3.10.16; inference Python not yet verified",
+  "CUDA_driver": null,
+  "Paddle_runtime": {
+    "model": "PaddleOCR-VL-1.6",
+    "paddle": "3.3.1",
+    "paddleocr": "3.7.0",
+    "paddlex": "3.7.2",
+    "evidence": "actual front826 PADDLE/parameters.json",
+    "evidence_sha256": "8a244f2f9fbbb4f554c0fce5ded02056cbabd099e9f4e5f041551104c1d0ab9a"
+  },
+  "install_validated": false,
+  "upstream_requirements_url": "https://raw.githubusercontent.com/caipeng328/TeleOCR/9921cffe380efe4e2fa010258b3d0c3cb70bab2d/pyproject.toml",
+  "upstream_ranges_are_not_exact_runtime_lock": true
+}

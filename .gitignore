@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+.env
+.env.*
+dependencies_local/
+data/
+models/
+outputs/
+predictions/
+NATIVE_DETERMINISTIC_CODE.json
+*.safetensors
+*.pt
+*.pth
+*.bin
+
+LOCAL_CONFIG.json

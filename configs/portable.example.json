@@ -1,0 +1,20 @@
+{
+  "schema": "ORIGINAL_BASELINE_ONEPAGE_SMOKE_R1",
+  "scope": "FOUR_STAGE_SMOKE_ONLY_NOT_FULL_R3",
+  "tele_source": null,
+  "model_root": null,
+  "python": null,
+  "image": "../data/public_smoke.png",
+  "output_root": "../outputs/public_smoke_r1",
+  "timeout_seconds": 600,
+  "public_model": {
+    "repo": "XingChen-AGI/TeleOCR",
+    "observed_revision": "e92585356c0d0b7b7a65938f3da035c6593cc9a6",
+    "revision_is_historical_identity": false,
+    "observed_main_weight_sha256": "9817b18041bd96403f75e38a33b28ed0cd5fb2641f67eead673afabd3c408109"
+  },
+  "full_R3_acceptance": false,
+  "default_pipeline": "R3_VLLM_COLD_SAME_BACKEND_R1",
+  "table_reread_scale": 1.0,
+  "device": null
+}

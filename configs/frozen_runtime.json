@@ -1,0 +1,127 @@
+{
+  "backend": "vllm-engine",
+  "max_model_len": 16384,
+  "expected_seed": 0,
+  "expected_sampling": {
+    "text": {
+      "temperature": 0.0,
+      "top_p": 0.01,
+      "top_k": 1,
+      "presence_penalty": 1.0,
+      "frequency_penalty": 0.05,
+      "repetition_penalty": 1.0,
+      "no_repeat_ngram_size": 100,
+      "max_new_tokens": null
+    },
+    "table": {
+      "temperature": 0.0,
+      "top_p": 0.01,
+      "top_k": 1,
+      "presence_penalty": 1.0,
+      "frequency_penalty": 0.005,
+      "repetition_penalty": 1.0,
+      "no_repeat_ngram_size": 100,
+      "max_new_tokens": null
+    },
+    "equation": {
+      "temperature": 0.0,
+      "top_p": 0.01,
+      "top_k": 1,
+      "presence_penalty": 1.0,
+      "frequency_penalty": 0.05,
+      "repetition_penalty": 1.0,
+      "no_repeat_ngram_size": 100,
+      "max_new_tokens": null
+    },
+    "code": {
+      "temperature": 0.0,
+      "top_p": 0.01,
+      "top_k": 1,
+      "presence_penalty": 1.0,
+      "frequency_penalty": 0.05,
+      "repetition_penalty": 1.0,
+      "no_repeat_ngram_size": 100,
+      "max_new_tokens": null
+    },
+    "layout": {
+      "temperature": 0.0,
+      "top_p": 0.01,
+      "top_k": 1,
+      "presence_penalty": 0.0,
+      "frequency_penalty": 0.0,
+      "repetition_penalty": 1.0,
+      "no_repeat_ngram_size": 100,
+      "max_new_tokens": null
+    },
+    "seal": {
+      "temperature": 0.0,
+      "top_p": 0.01,
+      "top_k": 1,
+      "presence_penalty": 1.0,
+      "frequency_penalty": 0.005,
+      "repetition_penalty": 1.0,
+      "no_repeat_ngram_size": 100,
+      "max_new_tokens": null
+    },
+    "char": {
+      "temperature": 0.0,
+      "top_p": 0.01,
+      "top_k": 1,
+      "presence_penalty": 1.0,
+      "frequency_penalty": 0.005,
+      "repetition_penalty": 1.0,
+      "no_repeat_ngram_size": 100,
+      "max_new_tokens": null
+    },
+    "default": {
+      "temperature": 0.0,
+      "top_p": 0.01,
+      "top_k": 1,
+      "presence_penalty": 1.0,
+      "frequency_penalty": 0.05,
+      "repetition_penalty": 1.0,
+      "no_repeat_ngram_size": 100,
+      "max_new_tokens": null
+    },
+    "table_structure": {
+      "temperature": 0.0,
+      "top_p": 0.01,
+      "top_k": 1,
+      "presence_penalty": 1.0,
+      "frequency_penalty": 0.005,
+      "repetition_penalty": 1.0,
+      "no_repeat_ngram_size": 100,
+      "max_new_tokens": null
+    },
+    "formula_structure": {
+      "temperature": 0.0,
+      "top_p": 0.01,
+      "top_k": 1,
+      "presence_penalty": 1.0,
+      "frequency_penalty": 0.05,
+      "repetition_penalty": 1.0,
+      "no_repeat_ngram_size": 100,
+      "max_new_tokens": null
+    }
+  },
+  "expected_prompts": {
+    "text": "\nPlease output the text content from the image.",
+    "table": "\nThis is the image of a table. Please output the table in OTSL format.",
+    "equation": "\nPlease write out the expression of the formula in the image using LaTeX format.",
+    "code": "\nThe image contains a code snippet, please output the parsing result.",
+    "layout": "\nAnalyze the image layout.",
+    "seal": "\nSeal Recognition:",
+    "char": "\nThis is a scientific figure. Please extract the table implied by this figure.",
+    "default": "\nPlease output the text content from the image.",
+    "table_structure": "\nTable Recognition:",
+    "formula_structure": "\nFormula Recognition:"
+  },
+  "source_manifest_sha256": "363cdb89f7ba01e742474454011e36e57d9601566baf4660ce94ef52d7b711c8",
+  "GT_sha256": "a45cd84b04ad8b793e775089640e6b681209abea33ead54c1828ddca35fae496",
+  "pages": 1651,
+  "halves": [
+    826,
+    825
+  ],
+  "full_checkpoint_config_and_processor_bytes": "externally supplied and hash-verified; no weights bundled"
+}

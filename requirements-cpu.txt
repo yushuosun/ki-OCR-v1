@@ -1,0 +1,2 @@
+# reproduce.py --check and prepare_native.py require only Python >=3.10 stdlib.
+# GPU/renderer dependencies are external; do not install them for --check.

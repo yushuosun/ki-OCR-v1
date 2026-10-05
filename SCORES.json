@@ -1,0 +1,54 @@
+{
+  "default_pipeline": "R3_VLLM_COLD_SAME_BACKEND_R1",
+  "default_table_reread_scale": 1,
+  "historical_original": {
+    "Overall": 98.38731063936983,
+    "pages": 1651,
+    "identity": "RECOVERED_COMPOSITE_WITH_NATIVE16_256_REUSE",
+    "fresh_uninterrupted_run": false,
+    "maintainer_reproduction_score": null
+  },
+  "table150": {
+    "Overall": 97.73879546101563,
+    "status": "EXPERIMENTAL_FAILED_NOT_DEFAULT",
+    "pages": 1651,
+    "complete_pages": 1651,
+    "failed_pages_retained": 0,
+    "components": {
+      "text_block/Edit_dist": {
+        "value": 0.024903690476259205,
+        "applicable_pages": 1557
+      },
+      "display_formula/Edit_dist": {
+        "value": 0.05920510657265994,
+        "applicable_pages": 313
+      },
+      "display_formula/CDM": {
+        "value": 0.9855839064466104,
+        "applicable_pages": 313
+      },
+      "table/Edit_dist": {
+        "value": 0.03354845886302911,
+        "applicable_pages": 458
+      },
+      "table/TEDS": {
+        "value": 0.9714836478601176,
+        "applicable_pages": 458
+      },
+      "table/TEDS_structure_only": {
+        "value": 0.9826747513256184,
+        "applicable_pages": 458
+      },
+      "reading_order/Edit_dist": {
+        "value": 0.11852994558083821,
+        "applicable_pages": 1638
+      }
+    },
+    "actual_RESULT_sha256": "a3b3f274d090476df167ec4b8b8e9157da1cca3ea2e3776bd3594ea7ab38bd6e",
+    "delta_vs_historical_original_pp": -0.6485151783542022,
+    "public_full_score_calls": 1,
+    "additional_public_scale_sweep": false
+  },
+  "scores_are_self_tests_not_official_leaderboard_acceptance": true,
+  "public_predictions_included": false
+}
