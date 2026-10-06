@@ -1,0 +1,224 @@
+{
+  "schema": "KI_OCR_PUBLIC_MODELS_OFFLINE_V1",
+  "models": [
+    {
+      "kind": "tele",
+      "repository": "XingChen-AGI/TeleOCR",
+      "revision": "e92585356c0d0b7b7a65938f3da035c6593cc9a6",
+      "public_ungated": true,
+      "files": [
+        {
+          "file": "added_tokens.json",
+          "url": "https://huggingface.co/XingChen-AGI/TeleOCR/resolve/e92585356c0d0b7b7a65938f3da035c6593cc9a6/added_tokens.json",
+          "sha256": "58b54bbe36fc752f79a24a271ef66a0a0830054b4dfad94bde757d851968060b",
+          "bytes": 605
+        },
+        {
+          "file": "chat_template.jinja",
+          "url": "https://huggingface.co/XingChen-AGI/TeleOCR/resolve/e92585356c0d0b7b7a65938f3da035c6593cc9a6/chat_template.jinja",
+          "sha256": "a0bc6f6fc7a29a80017a433e8f03a1cc1236e838a944a2d034295a60c4f2fddb",
+          "bytes": 1017
+        },
+        {
+          "file": "config.json",
+          "url": "https://huggingface.co/XingChen-AGI/TeleOCR/resolve/e92585356c0d0b7b7a65938f3da035c6593cc9a6/config.json",
+          "sha256": "92c5e15f1768dcb54bceae170043fbfefd248508159700b2179824b88c33ae75",
+          "bytes": 3516
+        },
+        {
+          "file": "generation_config.json",
+          "url": "https://huggingface.co/XingChen-AGI/TeleOCR/resolve/e92585356c0d0b7b7a65938f3da035c6593cc9a6/generation_config.json",
+          "sha256": "50867494bddf9ddc8e289e6214be5a2263e68f16c127a3652c6eb9f17990e5d9",
+          "bytes": 244
+        },
+        {
+          "file": "merges.txt",
+          "url": "https://huggingface.co/XingChen-AGI/TeleOCR/resolve/e92585356c0d0b7b7a65938f3da035c6593cc9a6/merges.txt",
+          "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+          "bytes": 1671853
+        },
+        {
+          "file": "model.safetensors",
+          "url": "https://huggingface.co/XingChen-AGI/TeleOCR/resolve/e92585356c0d0b7b7a65938f3da035c6593cc9a6/model.safetensors",
+          "sha256": "9817b18041bd96403f75e38a33b28ed0cd5fb2641f67eead673afabd3c408109",
+          "bytes": 2830223488
+        },
+        {
+          "file": "modeling_naviocr.py",
+          "url": "https://huggingface.co/XingChen-AGI/TeleOCR/resolve/e92585356c0d0b7b7a65938f3da035c6593cc9a6/modeling_naviocr.py",
+          "sha256": "7adac1cc17009f9f1b8e0c58284d7c0b9989a590f017b9e5964cc42270207922",
+          "bytes": 84057
+        },
+        {
+          "file": "preprocessor_config.json",
+          "url": "https://huggingface.co/XingChen-AGI/TeleOCR/resolve/e92585356c0d0b7b7a65938f3da035c6593cc9a6/preprocessor_config.json",
+          "sha256": "f2058c716eef96ccaed1cc1e2d0c08306b62586d535b28d9d08e691b2fab7ca0",
+          "bytes": 350
+        },
+        {
+          "file": "special_tokens_map.json",
+          "url": "https://huggingface.co/XingChen-AGI/TeleOCR/resolve/e92585356c0d0b7b7a65938f3da035c6593cc9a6/special_tokens_map.json",
+          "sha256": "76862e765266b85aa9459767e33cbaf13970f327a0e88d1c65846c2ddd3a1ecd",
+          "bytes": 613
+        },
+        {
+          "file": "tokenizer.json",
+          "url": "https://huggingface.co/XingChen-AGI/TeleOCR/resolve/e92585356c0d0b7b7a65938f3da035c6593cc9a6/tokenizer.json",
+          "sha256": "9c5ae00e602b8860cbd784ba82a8aa14e8feecec692e7076590d014d7b7fdafa",
+          "bytes": 11421896
+        },
+        {
+          "file": "tokenizer_config.json",
+          "url": "https://huggingface.co/XingChen-AGI/TeleOCR/resolve/e92585356c0d0b7b7a65938f3da035c6593cc9a6/tokenizer_config.json",
+          "sha256": "e04be4dd17e9f661bc487ba848a37f66a8f1adf2eef412f5d4ecb40cab4d39e7",
+          "bytes": 4730
+        },
+        {
+          "file": "video_preprocessor_config.json",
+          "url": "https://huggingface.co/XingChen-AGI/TeleOCR/resolve/e92585356c0d0b7b7a65938f3da035c6593cc9a6/video_preprocessor_config.json",
+          "sha256": "15bb7c2f2bc95fe9cc3749a4b287872b4886a15e9fcf550a4122a46ae26150bd",
+          "bytes": 913
+        },
+        {
+          "file": "vocab.json",
+          "url": "https://huggingface.co/XingChen-AGI/TeleOCR/resolve/e92585356c0d0b7b7a65938f3da035c6593cc9a6/vocab.json",
+          "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+          "bytes": 2776833
+        }
+      ]
+    },
+    {
+      "kind": "paddle",
+      "repository": "PaddlePaddle/PaddleOCR-VL-1.6",
+      "revision": "c5630abae1d940eafe0697512a0325494b02ab42",
+      "public_ungated": true,
+      "files": [
+        {
+          "file": "added_tokens.json",
+          "url": "https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6/resolve/c5630abae1d940eafe0697512a0325494b02ab42/added_tokens.json",
+          "sha256": "f59f889088e0fe21c523e7cf121bb6dca3b0bb148cb7159fbb4572c74dfc5644",
+          "bytes": 25381
+        },
+        {
+          "file": "chat_template.jinja",
+          "url": "https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6/resolve/c5630abae1d940eafe0697512a0325494b02ab42/chat_template.jinja",
+          "sha256": "2f27812dab7f333e471884e0c803d807f11953d5453140dfb1aaba234f872bc8",
+          "bytes": 1474
+        },
+        {
+          "file": "config.json",
+          "url": "https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6/resolve/c5630abae1d940eafe0697512a0325494b02ab42/config.json",
+          "sha256": "ce7f4565f8b1db78532ad5d1b9ebe55c2139d49bd4cb04778b580a08a598f171",
+          "bytes": 2059
+        },
+        {
+          "file": "configuration_paddleocr_vl.py",
+          "url": "https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6/resolve/c5630abae1d940eafe0697512a0325494b02ab42/configuration_paddleocr_vl.py",
+          "sha256": "753dd93654c3a9c8c85a3eaee1e3092dd12591b0f2dce0305e1abfb7a41ff160",
+          "bytes": 8104
+        },
+        {
+          "file": "generation_config.json",
+          "url": "https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6/resolve/c5630abae1d940eafe0697512a0325494b02ab42/generation_config.json",
+          "sha256": "a6701d78ab3b4d972307cdec3b69d4c13f46e0d5140514f50ab7d84259324b94",
+          "bytes": 133
+        },
+        {
+          "file": "image_processing_paddleocr_vl.py",
+          "url": "https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6/resolve/c5630abae1d940eafe0697512a0325494b02ab42/image_processing_paddleocr_vl.py",
+          "sha256": "a4fa521b9cb16e207f94b7f2d16427771776dfc634420d319fc4916ee58049ec",
+          "bytes": 25032
+        },
+        {
+          "file": "inference.yml",
+          "url": "https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6/resolve/c5630abae1d940eafe0697512a0325494b02ab42/inference.yml",
+          "sha256": "1587aece2d6442366efce34161d5f7d5f67f09ebfbf043168e5fade892c2780e",
+          "bytes": 43
+        },
+        {
+          "file": "model.safetensors",
+          "url": "https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6/resolve/c5630abae1d940eafe0697512a0325494b02ab42/model.safetensors",
+          "sha256": "85a479d506a11e724e7285d395c551be69f41dbc16b6342d3cacfb189aed71db",
+          "bytes": 1917255968
+        },
+        {
+          "file": "modeling_paddleocr_vl.py",
+          "url": "https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6/resolve/c5630abae1d940eafe0697512a0325494b02ab42/modeling_paddleocr_vl.py",
+          "sha256": "c5013dff57ca8b87dc1de64d0fd839a44313de09d230a4fb2d08289d2cad5111",
+          "bytes": 103889
+        },
+        {
+          "file": "preprocessor_config.json",
+          "url": "https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6/resolve/c5630abae1d940eafe0697512a0325494b02ab42/preprocessor_config.json",
+          "sha256": "111872ab1e8bb7fd040ac5087bfced7ab8f011f02139b088cba294964c3b1d0e",
+          "bytes": 641
+        },
+        {
+          "file": "processing_paddleocr_vl.py",
+          "url": "https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6/resolve/c5630abae1d940eafe0697512a0325494b02ab42/processing_paddleocr_vl.py",
+          "sha256": "e29cb1e5f275f2bd3ce051bd5c9983a33894e693b2823a0e13d4c07c8c4f9e13",
+          "bytes": 12253
+        },
+        {
+          "file": "processor_config.json",
+          "url": "https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6/resolve/c5630abae1d940eafe0697512a0325494b02ab42/processor_config.json",
+          "sha256": "1568858960a9760c54431dae693a6152e601ff55cdf6d2eab97a4a99958faea0",
+          "bytes": 137
+        },
+        {
+          "file": "special_tokens_map.json",
+          "url": "https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6/resolve/c5630abae1d940eafe0697512a0325494b02ab42/special_tokens_map.json",
+          "sha256": "d3a125c03103deb2acaf7730791bdbbf196f620e5a2213b664511ff9b4b25bab",
+          "bytes": 1151
+        },
+        {
+          "file": "tokenizer.json",
+          "url": "https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6/resolve/c5630abae1d940eafe0697512a0325494b02ab42/tokenizer.json",
+          "sha256": "c8a215a59183d0d0781adc33bacd3ce6162716f7fd568fb30234a74d69803a7d",
+          "bytes": 11189060
+        },
+        {
+          "file": "tokenizer.model",
+          "url": "https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6/resolve/c5630abae1d940eafe0697512a0325494b02ab42/tokenizer.model",
+          "sha256": "34ef7db83df785924fb83d7b887b6e822a031c56e15cff40aaf9b982988180df",
+          "bytes": 1614363
+        },
+        {
+          "file": "tokenizer_config.json",
+          "url": "https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6/resolve/c5630abae1d940eafe0697512a0325494b02ab42/tokenizer_config.json",
+          "sha256": "1f979337347cc0cb72a6282d8a23ed183539aa81a87a906f022aee2bab83c7c5",
+          "bytes": 186947
+        }
+      ]
+    },
+    {
+      "kind": "paddle_layout",
+      "repository": "PaddlePaddle/PP-DocLayoutV3",
+      "revision": "7b48a7566925fa464281f930c58eee04fe2c862a",
+      "public_ungated": true,
+      "files": [
+        {
+          "file": "inference.json",
+          "url": "https://huggingface.co/PaddlePaddle/PP-DocLayoutV3/resolve/7b48a7566925fa464281f930c58eee04fe2c862a/inference.json",
+          "sha256": "2b68367c5b312a03de5a6e1642c597c8f95165a7e40cd59c6700cf4a5042f4fd",
+          "bytes": 1196890
+        },
+        {
+          "file": "inference.pdiparams",
+          "url": "https://huggingface.co/PaddlePaddle/PP-DocLayoutV3/resolve/7b48a7566925fa464281f930c58eee04fe2c862a/inference.pdiparams",
+          "sha256": "70bd316b0582769ec968829fd1feb1a6a58b7c941b938327e551b6b12b45c137",
+          "bytes": 130806572
+        },
+        {
+          "file": "inference.yml",
+          "url": "https://huggingface.co/PaddlePaddle/PP-DocLayoutV3/resolve/7b48a7566925fa464281f930c58eee04fe2c862a/inference.yml",
+          "sha256": "506fcfac13b3b546ae40d7886b44126420f392adb694e3f8bb6a6286a1f90fdc",
+          "bytes": 1482
+        }
+      ]
+    }
+  ],
+  "provenance": "Fixed anonymous public HF downloads previously verified in an independent Linux environment; size recorded from those files",
+  "agreements_accepted": false,
+  "weights_in_source_archive": false
+}

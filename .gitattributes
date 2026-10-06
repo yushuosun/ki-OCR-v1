@@ -1,0 +1,2 @@
+# Preserve recorded byte hashes across Windows/Linux checkouts and Git archives.
+* -text

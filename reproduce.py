@@ -6,7 +6,7 @@ def read(name):
     return json.loads((R / name).read_text(encoding="utf-8"))
 def check():
     manifest = read("FILES.json")
-    actual = {p.relative_to(R).as_posix() for p in R.rglob("*") if p.is_file() and ".git" not in p.parts and "__pycache__" not in p.parts and not ({"data","models","outputs","dependencies_local"} & set(p.relative_to(R).parts)) and p.name not in {"LOCAL_CONFIG.json","NATIVE_DETERMINISTIC_CODE.json"}}
+    actual = {p.relative_to(R).as_posix() for p in R.rglob("*") if p.is_file() and ".git" not in p.parts and "__pycache__" not in p.parts and not ({"data","models","outputs","dependencies_local",".ki-ocr","device-locks"} & set(p.relative_to(R).parts)) and p.name not in {"LOCAL_CONFIG.json","NATIVE_DETERMINISTIC_CODE.json"}}
     assert actual == set(manifest) | {"FILES.json"}, "File allowlist mismatch"
     for name, expected in manifest.items():
         raw = (R / name).read_bytes()
@@ -49,6 +49,31 @@ def check():
     assert default[:-1]==alternative[:-1]
     assert read("SCORES.json")["default_table_reread_scale"] == 1.0
     assert read("SCORES.json")["table150"]["Overall"] < read("SCORES.json")["historical_original"]["Overall"]
+    # Verify the new worker changes host plumbing only, leaving the scientific
+    # four-stage body equal to the frozen original after this explicit mapping.
+    remap={"resource":"runtime", "lease_expires_epoch":"phase_deadline_epoch", "gpu_uuid":"device_id",
+           "OWNER_LEASE_EXPIRED":"REQUEST_DEADLINE_EXPIRED",
+           "REQUEST_600S_OR_OWNER_LEASE_EXPIRED":"REQUEST_600S_OR_PHASE_DEADLINE_EXPIRED",
+           "PADDLE_REQUEST_600S_OR_OWNER_LEASE_EXPIRED":"PADDLE_REQUEST_600S_OR_PHASE_DEADLINE_EXPIRED"}
+    class PortableHost(ast.NodeTransformer):
+        def visit_Constant(self,node):
+            if isinstance(node.value,str) and node.value in remap:
+                return ast.copy_location(ast.Constant(remap[node.value]),node)
+            return node
+    new=ast.parse((R/"pure_worker.py").read_text(encoding="utf-8"))
+    for name in ("tele_phase","paddle_phase"):
+        original=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name==name)
+        if name=="paddle_phase":
+            original.body=[s for s in original.body if not (isinstance(s,ast.Expr) and isinstance(s.value,ast.Call)
+                and any(isinstance(x,ast.Constant) and x.value=="CURRENT_PADDLE_ASSET_IDENTITY_REQUIRED" for x in s.value.args))]
+        portable=next(n for n in new.body if isinstance(n,ast.FunctionDef) and n.name==name)
+        assert ast.dump(PortableHost().visit(original)) == ast.dump(portable), "Portable scientific body changed: "+name
+    assert read("DEPENDENCIES.json")["paddle_source_sha256"] == manifest["paddle_producer.py"]
+    wheel = read("PADDLE_WHEEL_PIN.json")
+    assert wheel['python_abi'] == 'cp310' and wheel['CUDA'] == '12.6' and wheel['version'] == '3.3.1'
+    lock = set((R/'requirements-paddle.lock').read_text(encoding='utf-8').splitlines())
+    assert set(wheel['CUDA_dependency_pins']) <= lock, 'Actual Paddle CUDA12 wheel dependency pin missing'
+    assert not any('cu13==' in value or value.startswith(('cuda-python==','cuda-bindings==')) for value in lock), 'Stale CUDA13 Paddle lock'
     return {"status": "CPU_SOURCE_CHECK_PASS", "files_checked": len(manifest), "GPU_inference_run": False, "full_reproduction_ready": False, "external_dependencies_required": True, "secret_scan": "listed token/private-key patterns only; not comprehensive DLP"}
 def main():
     p = argparse.ArgumentParser()

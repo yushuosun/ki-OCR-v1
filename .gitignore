@@ -14,3 +14,5 @@ NATIVE_DETERMINISTIC_CODE.json
 *.bin
 
 LOCAL_CONFIG.json
+.ki-ocr/
+device-locks/

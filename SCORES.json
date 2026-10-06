@@ -50,5 +50,17 @@
     "additional_public_scale_sweep": false
   },
   "scores_are_self_tests_not_official_leaderboard_acceptance": true,
-  "public_predictions_included": false
+  "public_predictions_included": false,
+  "historical_actual_runtime": {
+    "context_from_effective_contracts": 16384,
+    "seed": "UNKNOWN",
+    "enforce_eager": "UNKNOWN",
+    "evidence": "Parent independently SHA-matched the three historical effective contracts; missing fields stay unknown."
+  },
+  "new_entry_runtime": {
+    "seed": 0,
+    "context": 16384,
+    "enforce_eager_default": false,
+    "historical_score_reproduced": false
+  }
 }

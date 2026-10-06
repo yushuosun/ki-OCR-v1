@@ -83,7 +83,7 @@
   "scorer_url": "https://github.com/opendatalab/OmniDocBench",
   "scorer_revision": "f133a71e9e91c3621c7ce8994200a7b394a06eb3",
   "paddle_url": "https://github.com/PaddlePaddle/PaddleOCR",
-  "paddle_source_sha256": "2604d5191c78c292e6579ba45d25d72f185fe4a844acb8b35863707a81736064",
+  "paddle_source_sha256": "5c22eb2690ce11f4666efaaea1df5bf196eeeb771ae0c6dd642356565a007177",
   "weights_included": false,
   "third_party_source_vendored": false,
   "source_scripts_were_project_authored_adapters": true,
@@ -91,5 +91,7 @@
   "paddle_layout_model_url": "https://huggingface.co/PaddlePaddle/PP-DocLayoutV3",
   "paddle_public_snapshot_equivalence": "NOT_VERIFIED",
   "observed_environment_file": "ENVIRONMENT.json",
-  "tele_model_file_pins": "MODEL_PINS.json"
+  "tele_model_file_pins": "MODEL_PINS.json",
+  "historical_paddle_source_sha256": "2604d5191c78c292e6579ba45d25d72f185fe4a844acb8b35863707a81736064",
+  "paddle_producer_provenance": "Byte-identical independent adapter from specified private R6; fixes stale R6 2604 binding. Original package/core unchanged."
 }

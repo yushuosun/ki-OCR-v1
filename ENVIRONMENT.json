@@ -19,5 +19,18 @@
   },
   "install_validated": false,
   "upstream_requirements_url": "https://raw.githubusercontent.com/caipeng328/TeleOCR/9921cffe380efe4e2fa010258b3d0c3cb70bab2d/pyproject.toml",
-  "upstream_ranges_are_not_exact_runtime_lock": true
+  "upstream_ranges_are_not_exact_runtime_lock": true,
+  "original_fields_scope": "Historical evidence above; original unknowns retained",
+  "portable_R3": {
+    "Python": "3.10.16",
+    "Tele_locked_versions": 179,
+    "Paddle_locked_versions": 117,
+    "Paddle_build_CUDA": "12.6",
+    "Paddle_build_cuDNN": "9.5.1",
+    "Tele_install_route": "top-level TeleOCR0.1.0 --no-deps",
+    "actual_CPU_imports": "Tele including installed/loaded plugin and Paddle/OpenCV/PaddleOCRVL PASS",
+    "updated_all_in_one_from_empty_root": "NOT_RERUN",
+    "unified_GPU": "NOT_RUN",
+    "native_runtime": "Public pinned libgomp + _openmp_mutex user prefix"
+  }
 }

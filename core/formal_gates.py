@@ -5,7 +5,6 @@ import os
 from pathlib import Path
 import re
 
-ROOT=Path('/work/docai/hybrid_v31_cluster_smoke_20261001_r1')
 MANIFEST='363cdb89f7ba01e742474454011e36e57d9601566baf4660ce94ef52d7b711c8'
 INPUTS={'gpu2':'81727097cd6019904f4796ad75e7b88c7aa49bc37a6d98345a2a423ac2c181bf',
         'gpu4':'187d0bf3704dd17ae2b46079de39fed3ff3eb8427a3df94a2b619665b6e609f3'}
@@ -38,7 +37,12 @@ def read_evidence(ref,root):
     return value
 
 
-def acceptance(c,root=ROOT):
+def acceptance(c,*,root):
+    # The authorized caller supplies this root; never derive it from contract data.
+    require(isinstance(root,(str,os.PathLike)),'EXPLICIT_AUTHORIZED_EVIDENCE_ROOT_REQUIRED')
+    root=Path(root)
+    require(root.is_absolute() and root!=Path(root.anchor) and root.is_dir() and not root.is_symlink() and
+            root.resolve()==Path(os.path.abspath(root)),'CANONICAL_AUTHORIZED_EVIDENCE_ROOT_REQUIRED')
     fresh_contract(c);gate=c['formal_acceptance_evidence']
     require(gate.get('user_explicit_formal_approval_confirmed') is True and
             isinstance(gate.get('user_explicit_formal_approval'),str) and gate['user_explicit_formal_approval'].strip(), 'EXPLICIT_PARENT_USER_FORMAL_APPROVAL_REQUIRED')

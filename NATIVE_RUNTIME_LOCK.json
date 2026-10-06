@@ -1,0 +1,27 @@
+{
+  "library_pins": {
+    "lib/libgomp.so.1": "34324e0835be6e103844d7c416bec42834cf803d3ba8d9519df15ced19914dfe"
+  },
+  "reason": "Actual fresh Paddle import missing libgomp.so.1; public user-directory runtime, no system writes",
+  "license": "GCC runtime terms; full transitive review pending",
+  "packages": [
+    {
+      "name": "libgomp",
+      "version": "16.2.0",
+      "build_string": "he0feb66_7",
+      "url": "https://conda.anaconda.org/conda-forge/linux-64/libgomp-16.2.0-he0feb66_7.conda",
+      "sha256": "92a0bb350c7be6a4eedcb4e111c60aefd176018e6b1c009a6e025dbe9bbcd758",
+      "md5": "d904c7ddd95e026254b4b80808ee9e12",
+      "size": 640566
+    },
+    {
+      "name": "_openmp_mutex",
+      "version": "4.5",
+      "build_string": "20_gnu",
+      "url": "https://conda.anaconda.org/conda-forge/linux-64/_openmp_mutex-4.5-20_gnu.conda",
+      "sha256": "1dd3fffd892081df9726d7eb7e0dea6198962ba775bd88842135a4ddb4deb3c9",
+      "md5": "a9f577daf3de00bca7c3c76c0ecbd1de",
+      "size": 28948
+    }
+  ]
+}
